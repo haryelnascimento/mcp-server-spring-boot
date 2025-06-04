@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-table-usuario
+      author: copilot
+      changes:
+        - createTable:
+            tableName: usuario
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: des_nome
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: des_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: des_senha
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: des_perfil
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: des_status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data_criacao
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data_atualizacao
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
