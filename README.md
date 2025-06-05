@@ -2,21 +2,21 @@
 
 Este projeto é uma API RESTful desenvolvida em Spring Boot 3 para demonstrar a integração via **Model Context Protocol (MCP)**, permitindo que agentes de IA como o GitHub Copilot interajam com a API de forma inteligente e automatizada.
 
-## Permitindo executando comandos via linguagem natural no GitHub Copilot
+## 🤖 Permitindo executar comandos via linguagem natural no GitHub Copilot
 
-- Consulta usuários pelos filtros de nome, email, status e perfil
+- Consultar usuários pelos filtros de nome, email, status e perfil
 ![MCP Inspector](docs/copilot-busca-inativos.png)
 
-- Busque o usuário com ID X
+- Buscar o usuário com ID X
 ![MCP Inspector](docs/copilot-busca-por-id.png)
 
 - Criar vários usuários com dados fictícios
 ![MCP Inspector](docs/copilot-criar.png)
 
-- Atualize o email do usuário com ID X
+- Atualizar o email do usuário com ID X
 ![MCP Inspector](docs/copilot-atualizar.png)
 
-- Remova o usuário com ID Y
+- Remover o usuário com ID Y
 ![MCP Inspector](docs/copilot-deleta.png)
 
 ## O que é o Model Context Protocol (MCP)?
@@ -51,18 +51,18 @@ O **Model Context Protocol (MCP)** é um protocolo aberto que permite conectar a
 ```
 src/
 └── main/
-├── java/
-│ └── br.com.mcp.mcp_server
-│ ├── domain
-│ ├── application
-│ ├── infrastructure
-│ └── shared
-└── resources/
-├── db/
-│ └── changelog/
-│ ├── db.changelog-master.yaml
-│ └── create-table-usuario.yaml
-└── application.yml
+    ├── java/
+    │ └── br.com.mcp.mcp_server
+    │ ├── domain
+    │ ├── application
+    │ ├── infrastructure
+    │ └── shared
+    └── resources/
+    ├── db/
+    │ └── changelog/
+    │ ├── db.changelog-master.yaml
+    │ └── create-table-usuario.yaml
+    └── application.yml
 ```
 
 ---
@@ -91,7 +91,7 @@ docker compose up -d
 
 ## 💡 Integração com GitHub Copilot (MCP Server)
 
-O projeto já está preparado para funcionar com a extensão GitHub Copilot (com suporte ao Model Context Protocol - MCP), permitindo que você interaja com a API via comandos em linguagem natural (em português ou inglês) diretamente no VSCode.
+O projeto já está preparado para funcionar com a extensão GitHub Copilot (com suporte ao Model Context Protocol - MCP), permitindo que você interaja com a API por comandos em linguagem natural (em português ou inglês), diretamente no VSCode.
 
 ### ✅ Pré-requisitos
 
@@ -108,7 +108,7 @@ O projeto já está preparado para funcionar com a extensão GitHub Copilot (com
 
 ![Copilot Chat](docs/chat-copilot.png)
 
-- Com chat aberto, mude para o modo agente (Agent Mode), depois clique no ícone de ferramentas ou (ctrl+shift+/).
+- Com o chat aberto, mude para o modo agente (Agent Mode) e clique no ícone de ferramentas ou use o atalho **(Ctrl + Shift + /)**.
 
 #### 3. Preencha as informações solicitadas para adicionar o MCP Server:
 
@@ -121,14 +121,13 @@ O projeto já está preparado para funcionar com a extensão GitHub Copilot (com
             "type": "sse",
             "url": "http://localhost:8080/sse",
             "headers": {
-                "authorization": "basic Y2xpZW50OnNlY3JldA==" // client:secret em base64
+                "authorization": "basic Y2xpZW50OnNlY3JldA=="
             }
         }
     }
 }
 ```
-
-- Start o MCP Server (se ainda não estiver rodando).
+- O valor do authorization é a string client:secret codificada em Base64.
 
 ![Conectando ao MCP-Server](mcp-server-config.png)
 
@@ -166,7 +165,7 @@ Isso gera uma interface de ferramenta que o Copilot pode "entender", permitindo 
 #### Saiba mais sobre [Spring AI MCP Server Starter](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-overview.html)
 ---
 
-## 🎁 Dica para visualizar as tools disponível com o MCP Inspector 
+## 🎁 Dica para visualizar as tools disponíveis com o MCP Inspector 
 
 O MCP Inspector é uma ferramenta de desenvolvedor feita para testar e depurar servidores MCP de forma visual e interativa, direto no navegador.
 
