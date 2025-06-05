@@ -14,28 +14,28 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: des_nome
+                  name: nome
                   type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: des_email
+                  name: email
                   type: varchar(255)
                   constraints:
                     nullable: false
                     unique: true
               - column:
-                  name: des_senha
+                  name: senha
                   type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: des_perfil
+                  name: perfil
                   type: varchar(50)
                   constraints:
                     nullable: false
               - column:
-                  name: des_status
+                  name: status
                   type: varchar(50)
                   constraints:
                     nullable: false

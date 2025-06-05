@@ -1,8 +1,11 @@
 {
     "servers": {
-        "my-mcp-server": {
+        "mcp-server": {
             "type": "sse",
             "url": "http://localhost:8080/sse",
+            "headers": {
+                "authorization": "basic Y2xpZW50OnNlY3JldA=="
+            }
         }
     }
 }

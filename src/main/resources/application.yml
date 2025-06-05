@@ -2,14 +2,6 @@ spring:
   application:
     name: mcp-server
 
-  ai:
-    mcp:
-      server:
-        enabled: true
-        name: stdio-mcp-server
-        version: 1.0.0
-        type: SYNC
-
   security:
     user:
       name: admin
@@ -32,8 +24,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
-    
-
 
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: stdio-mcp-server
+        version: 1.0.0
+        type: SYNC

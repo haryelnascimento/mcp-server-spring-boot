@@ -1,5 +1,24 @@
 # MCP Server com Spring Boot
 
+Este projeto é uma API RESTful desenvolvida em Spring Boot 3 para demonstrar a integração via **Model Context Protocol (MCP)**, permitindo que agentes de IA como o GitHub Copilot interajam com a API de forma inteligente e automatizada.
+
+## Permitindo executando comandos via linguagem natural no GitHub Copilot
+
+- Consulta usuários pelos filtros de nome, email, status e perfil
+![MCP Inspector](docs/copilot-busca-inativos.png)
+
+- Busque o usuário com ID X
+![MCP Inspector](docs/copilot-busca-por-id.png)
+
+- Criar vários usuários com dados fictícios
+![MCP Inspector](docs/copilot-criar.png)
+
+- Atualize o email do usuário com ID X
+![MCP Inspector](docs/copilot-atualizar.png)
+
+- Remova o usuário com ID Y
+![MCP Inspector](docs/copilot-deleta.png)
+
 ## O que é o Model Context Protocol (MCP)?
 
 O **Model Context Protocol (MCP)** é um protocolo aberto que permite conectar agentes de IA (como o GitHub Copilot) a aplicações externas, expondo métodos do seu backend como "ferramentas" acessíveis por linguagem natural. Com o MCP, você pode:
@@ -13,18 +32,7 @@ O **Model Context Protocol (MCP)** é um protocolo aberto que permite conectar a
 - **Clientes MCP**: Ferramentas, IAs ou interfaces (VSCode, Copilot, MCP Inspector) que consomem essas ferramentas.
 - **Proxies MCP**: Intermediários que facilitam a comunicação entre clientes e servidores MCP (ex: MCPP do MCP Inspector).
 
----
-
-## Case de Uso: CRUD de Usuários
-
-Este projeto é uma API RESTful desenvolvida em Spring Boot 3 que demonstra um CRUD completo de usuários com:
-
-- Integração com **Model Context Protocol (MCP)** para agentes como GitHub Copilot
-- Migração de banco de dados gerenciada com **Liquibase**
-- Containerização com **Docker Compose**
-- Suporte a **especificações dinâmicas (Specification API)** para filtros
-- Consultas paginadas e ordenadas
-
+#### Saiba mais sobre o MCP em [Model Context Protocol](https://modelcontextprotocol.io/introduction)
 ---
 
 ## 🚀 Tecnologias Utilizadas
@@ -33,11 +41,8 @@ Este projeto é uma API RESTful desenvolvida em Spring Boot 3 que demonstra um C
 - Spring Boot 3.x
 - Spring Data JPA
 - PostgreSQL 17
-- Liquibase 23
 - Docker e Docker Compose
 - GitHub Copilot (via MCP)
-- ModelMapper
-- Lombok
 
 ---
 
@@ -67,7 +72,7 @@ src/
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/mcp-server.git
+git clone https://github.com/haryelnascimento/mcp-server-spring-boot.git
 cd mcp-server
 ```
 
@@ -84,7 +89,7 @@ docker compose up -d
 
 ---
 
-## Integração com GitHub Copilot (MCP Server)
+## 💡 Integração com GitHub Copilot (MCP Server)
 
 O projeto já está preparado para funcionar com a extensão GitHub Copilot (com suporte ao Model Context Protocol - MCP), permitindo que você interaja com a API via comandos em linguagem natural (em português ou inglês) diretamente no VSCode.
 
@@ -99,48 +104,51 @@ O projeto já está preparado para funcionar com a extensão GitHub Copilot (com
 
 #### 1. Abra o projeto no VSCode.
 
-#### 2. Pressione Ctrl+Shift+P (ou Cmd+Shift+P no Mac) e selecione:
+#### 2. Abra o painel do Copilot Chat (Ctrl + Shift + P e digite "Copilot Chat").
 
-```vbet
-Copilot: Add Custom Model Context Server
+![Copilot Chat](docs/chat-copilot.png)
+
+- Com chat aberto, mude para o modo agente (Agent Mode), depois clique no ícone de ferramentas ou (ctrl+shift+/).
+
+#### 3. Preencha as informações solicitadas para adicionar o MCP Server:
+
+- Arquivos `.vscode/mcp.json` na raiz do projeto.
+
+```json
+{
+    "servers": {
+        "mcp-server": {
+            "type": "sse",
+            "url": "http://localhost:8080/sse",
+            "headers": {
+                "authorization": "basic Y2xpZW50OnNlY3JldA==" // client:secret em base64
+            }
+        }
+    }
+}
 ```
 
-#### 3. Preencha as informações solicitadas:
+- Start o MCP Server (se ainda não estiver rodando).
 
-- Name: Usuário MCP Server
-
-- Executable path: caminho até seu JAR do projeto rodando com MCP (ex: java -jar target/mcp-server.jar)
-
-- Tipo de transporte: selecione stdio
-
-#### 4. Após adicionado, você verá algo como:
-
-💡 "Usuário MCP Server is now connected"
+![Conectando ao MCP-Server](mcp-server-config.png)
 
 ---
-
-## 📦 Exemplo de uso no Copilot Chat
-No painel de chat do Copilot, tente comandos como:
-
-- Liste todos os usuários inativos
-![MCP Inspector](docs/copilot-busca-inativos.png)
-
-- Busque o usuário com ID X
-![MCP Inspector](docs/copilot-busca-por-id.png)
-
-- Criar vários usuários com dados fictícios
-![MCP Inspector](docs/copilot-criar.png)
-
-- Atualize o email do usuário com ID X
-![MCP Inspector](docs/copilot-atualizar.png)
-
-- Remova o usuário com ID Y
 
 O agente AI reconhecerá a ferramenta exposta com @Tool no seu projeto e fará chamadas reais para os métodos do serviço Java.
 
 ## 💬 Como funciona nos bastidores?
 
-Você anota seu método com @Tool:
+O MCP Server Starter para Spring Boot permite que você exponha métodos do seu backend como ferramentas acessíveis por agentes de IA.
+
+```
+<dependency>
+    <groupId>org.springframework.ai</groupId>
+	    <artifactId>spring-ai-starter-mcp-server-webmvc</artifactId>
+	<version>1.0.0</version>
+</dependency>
+```
+
+Ele utiliza anotações específicas para identificar métodos que podem ser chamados via linguagem natural. Você anota seu método com @Tool:
 
 ```java
 @Tool(
@@ -155,7 +163,10 @@ public List<Usuario> listarTodos() {
 
 Isso gera uma interface de ferramenta que o Copilot pode "entender", permitindo interações diretas sem precisar conhecer o código.
 
-## 🎁 BÔNUS: Visualize as tools disponível com o MCP Inspector 
+#### Saiba mais sobre [Spring AI MCP Server Starter](https://docs.spring.io/spring-ai/reference/api/mcp/mcp-overview.html)
+---
+
+## 🎁 Dica para visualizar as tools disponível com o MCP Inspector 
 
 O MCP Inspector é uma ferramenta de desenvolvedor feita para testar e depurar servidores MCP de forma visual e interativa, direto no navegador.
 
